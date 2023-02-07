@@ -1,0 +1,64 @@
+
+spring:
+  datasource:
+#    url: jdbc:h2:mem:jpa-mapstruct
+    url: jdbc:h2:file:~/h2-db/jpa-mapstruct;AUTO_SERVER=true
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+#    show-sql: true
+    defer-datasource-initialization: true #spring <250
+#    defer-datasource-initialization: false #spring <250
+#    properties:
+#      hibernate:
+#        hbm2ddl:
+#          auto: true #removed, use hibernate.ddl-auto: update
+    hibernate:
+#      ddl-auto: create
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always
+#      mode: never
+logging:
+  level:
+#    org.springframework.web.filter.CommonsRequestLoggingFilter: debug
+    org:
+      hibernate:
+#        sql: debug #it doesn't work
+        cache: debug
+      springframework:
+#        web: debug
+        web:
+#          filter: debug #show post request (and response is truncated still)
+          filter:
+            CommonsRequestLoggingFilter: debug
+        cache: debug
+    web: debug
+    root: info
+    sql: debug
+
+#logging.level.org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+
+spring-doc:
+  swagger-ui:
+    enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    beans:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  server:
+    ssl:
+      client-auth: none
